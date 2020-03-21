@@ -7,7 +7,7 @@ There are several git branching models out there. It won't be long before you st
      :align: center
      :target: https://imgs.xkcd.com/comics/git.png
 
-The following guide delineates a git branching model for small teams. It attempts to provide a clean way to effectively collaborate while touching upon the most commonly occuring problems caused by, ahem, hitherto uninitiated team members. 
+The following guide delineates a git branching model for small teams. It attempts to provide a clean way to effectively collaborate while touching upon the most commonly occuring problems caused by, **ahem**, hitherto uninitiated team members. 
 
 Disclaimer: This guide assumes that you know the basics of ``git``. If not, then you can get started `here <https://rogerdudler.github.io/git-guide/>`_
 
@@ -130,7 +130,7 @@ So what's the remedy? The use of an effective git workflow (aka a branching mode
 The branching model - Demystified
 ---------------------------------
 
-The core idea is egregiously simple: Every collaborator works on their own fork of the main repository. They create branches in their forks to develop their feature and once ready, create a pull reuqest in the main repository. After all the tests pass and the maintainer reviews it, the branch is merged into the master branch of the main repository. 
+The core idea is simple: Every collaborator works on their own fork of the main repository. They create branches in their forks to develop their feature and once ready, create a pull reuqest in the main repository. After all the tests pass and the maintainer reviews it, the branch is merged into the master branch of the main repository. 
 
 This is by no means a new kind of workflow, this is exactly how contributions have been made to open-source projects for decades now. This guide simply aims to demystify this process. To illustrate this workflow, say that Bob and would like to contribute to Alice's repo called ``awesome-tools``
 
@@ -232,7 +232,7 @@ Typically, when you're directly working with a repo, the process is quite straig
 
     git pull --rebase
 
-  If there are no new changes, go to step 5
+   If there are no new changes, go to step 5
 
 #. If there are any conflicts, fix them and do the following::
 

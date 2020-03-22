@@ -14,6 +14,7 @@ It also lays out a formal process for development. This is by no means an exhaus
 
 .. toctree::
    :caption: Table of Contents
-   :maxdepth: 1
 
-   A simple branching model for git <git_steps.rst>
+   git/git.rst
+
+

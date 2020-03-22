@@ -1,18 +1,12 @@
-A simple git branching model
-============================
+Understanding the git pull-request workflow
+-------------------------------------------
 
-There are several git branching models out there. It won't be long before you start pulling your hair out not knowing what to do, resulting in something like this:
+There are several git workflows out there. I personally like `Vincent Driessen's <https://nvie.com/posts/a-successful-git-branching-model/>`_ workflow. It is over a decade old and followed religiously by several companies. It even comes with an excellent tool called `git flow <https://github.com/nvie/gitflow>`_. It is very well suited for projects which do periodic semantically-versioned releases. However, it can become a bit of a burden and *make your work painful after your projects grow* (See `this <https://reallifeprogramming.com/git-process-that-works-say-no-to-gitflow-50bf2038ccf7>`_ article by Marek Piechut)   
 
-  .. image:: https://imgs.xkcd.com/comics/git.png
-     :align: center
-     :target: https://imgs.xkcd.com/comics/git.png
+In fact, this guide is based on Marek's article. It provides a clean way to effectively collaborate while touching upon the most commonly occuring problems caused by, *ahem*, hitherto uninitiated team members. 
 
-The following guide delineates a git branching model for small teams. It attempts to provide a clean way to effectively collaborate while touching upon the most commonly occuring problems caused by, **ahem**, hitherto uninitiated team members. 
-
-Disclaimer: This guide assumes that you know the basics of ``git``. If not, then you can get started `here <https://rogerdudler.github.io/git-guide/>`_
-
-So let's start off with some general dos and don'ts
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+General git dos and don'ts
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Always make it a point to add files to your index (staging area) using::
 
@@ -30,7 +24,7 @@ So let's start off with some general dos and don'ts
   
   If this practice sounds a little too pedantic, I urge you to read `this <https://github.com/ChALkeR/notes/blob/master/Do-not-underestimate-credentials-leaks.md>`_.
 
-* Oftentimes, when working with a repository with many collaborators, the following is a very common occurrence::
+* When working with a repository with many collaborators, the following is a very common occurrence::
 
     To git@github.com:someguy/somerepo.git
     ! [rejected]        master -> master (non-fast-forward)
@@ -46,7 +40,6 @@ So let's start off with some general dos and don'ts
    git push -f origin master
 
   **NEVER** run this command. At any cost. This will overwrite all changes in the repository with the changes you have made, if the heads are not in sync. We will talk about how to deal with this problem a little later.
-
 
 * A commit message is meant to be a summary of what the commit does. It needs to be descriptive, yet brief. The first line, should describe the most significant change that the commit does. First line commit messages longer than ``50`` characters are truncated and wrapped to the next line resulting in a messy view on the commits page of github. So brevity is key. If there are some more minor changes, they can follow on the subsequent lines. This is purely optional. 
   
@@ -91,17 +84,18 @@ So let's start off with some general dos and don'ts
 
 * Commit often. Even if the change is minor, it is a good practice to commit frequently. Commits should be atomic. As mentioned previously, if there are lots of changes in a single commit, then it makes the life of the guy trying to run ``git bisect``, very hard.  
 
+
+
 With the most basic dos and don'ts out of the way, let us now get to the brass tacks. We will be looking at:
 
-#. The importance of a branching model
-#. A step-by-step guide to the branching model
+#. The importance of a workflow
+#. A step-by-step guide to the workflow
 #. Overcoming pitfalls when you're not using the model 
-
 
 This guide is going to be rife with dense git parlance. If you are not already familiar with the them, read `this <https://linuxacademy.com/blog/linux/git-terms-explained/>`_ guide.
 
 The need for a branching model
-------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 An article from `thenewstack <https://thenewstack.io/dont-mess-with-the-master-working-with-branches-in-git-and-github/>`_ quotes this about pushing directly to master::
 
@@ -120,17 +114,19 @@ On a more serious note, there are plenty of reasons why you should not commit to
 
 #. It will be unclear when a new feature was introduced and is fully functioning.
 
+#. Undoing a feature addition will be a monumental pain in the neck
+
 #. Those who fork from master, will get broken/incomplete changes.
 
 #. Setting up Continuous Delivery or Continuous Deployment will become challenging.
 
-So what's the remedy? The use of an effective git workflow (aka a branching model)
+So what's the remedy? The use of an effective git workflow to ensure that the HEAD of the master is always in a *production-ready* state
 
 
-The branching model - Demystified
----------------------------------
+The Pull-Request Workflow - Demystified
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The core idea is simple: Every collaborator works on their own fork of the main repository. They create branches in their forks to develop their feature and once ready, create a pull reuqest in the main repository. After all the tests pass and the maintainer reviews it, the branch is merged into the master branch of the main repository. 
+The core idea is really simple: Every collaborator works on their own fork of the main repository. They create branches in their forks to develop their feature and once ready, create a pull reuqest in the main repository. After all the tests pass and the maintainer reviews it, the branch is merged into the master branch of the main repository. 
 
 This is by no means a new kind of workflow, this is exactly how contributions have been made to open-source projects for decades now. This guide simply aims to demystify this process. To illustrate this workflow, say that Bob and would like to contribute to Alice's repo called ``awesome-tools``
 
@@ -200,8 +196,12 @@ This is by no means a new kind of workflow, this is exactly how contributions ha
 #. Bob now heads over to Alice's repo and creates a pull request
 
 #. Alice, reviews Bob code and if she thinks it's a valuable addition to her repository, merges Bob's pull request. 
-   
-   Note that it is advisable to ``Squash and Merge`` instead of using the plain merge. ``Squash and Merge`` will not create a merge commit in master.
+
+   If Alice wants to retain Bob's commit history (so that undoing his feature can become easier), she can run::
+
+     git merge --no-ff coverage-tools 
+
+   Note that this will create a dummy merge commit. If she does not want this, then she can use ``Squash and Merge`` to squash all branch commits into one commit without creating a merge commit, or use the regular merge.
 
 #. Bob must now update his fork using the following steps::
 
@@ -211,34 +211,3 @@ This is by no means a new kind of workflow, this is exactly how contributions ha
      git push origin master
 
    It is essential to note that if Bob doesn't update his fork and checks out from the master (whose ``HEAD`` is not in sync with Alice's repo), to add a new feature, it will lead to a textbook case of the fork being ``X commits ahead and Y commits behind alice/awesome-tools``  
-
-
-When should you not use this workflow - and avoiding common pitfalls
---------------------------------------------------------------------
-
-Following the branching model for every repository you push to can become quite cumbersome. Say you have a repository for your CV, following this workflow is unnecessarily complicated (even if there's a friend helping out with your CV). 
-
-Typically, when you're directly working with a repo, the process is quite straightforward, even if there is another collaborator:
-
-#. Add files using::
-
-    git add <filename>
-
-#. Commit the changes::
-
-    git commit
-
-#. Now, before pushing these changes, if there are new changes added to the repo, run::
-
-    git pull --rebase
-
-   If there are no new changes, go to step 5
-
-#. If there are any conflicts, fix them and do the following::
-
-    git add <conflict-free-file>
-    git rebase --continue
-
-#. Once the rebase is successful, it is safe to push the commit::
-
-    git push origin master

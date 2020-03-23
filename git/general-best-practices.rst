@@ -13,7 +13,7 @@ The following are some best practices for git projects curated from various sour
 
 * **Minimum acceptable coverage**: Merely writing tests for a project is pointless if the percentage of code covered by the tests is not known. Minimum acceptable coverage should be ``80 %``
 
-* **Set up a CI pipeline**: Having a tool that automaticaly runs tests against pull requests can be very useful. If the coverage is high (higher 80s and above) and the tests passthen there is a strong chance that the incoming code is bug-free (note that it is very hard to guarantee it)
+* **Set up a CI pipeline**: Having a tool that automaticaly runs tests against pull requests can be very useful. If the coverage is high (higher 80s and above) and the tests pass, then there is a strong chance that the incoming code is bug-free (note that it is very hard to guarantee it)
 
 * **Don't merge if build doesn't pass**: Maintainers should only accept pull requests that have passed all quality checks and code reviews before merging. As a rule, no PR should be merged if any of the checks fail.
 

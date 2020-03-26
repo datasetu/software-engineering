@@ -13,13 +13,13 @@ The following are some best practices for git projects curated from various sour
 
 * **Minimum acceptable coverage**: Merely writing tests for a project is pointless if the percentage of code covered by the tests is not known. Minimum acceptable coverage should be ``80 %``
 
-* **Set up a CI pipeline**: Having a tool that automaticaly runs tests against pull requests can be very useful. If the coverage is high (higher 80s and above) and the tests pass, then there is a strong chance that the incoming code is bug-free (note that it is very hard to guarantee it)
+* **Set up a CI pipeline**: Having a tool that automaticaly runs tests against pull requests can be very useful. If the coverage is high (higher 80s and above) and the tests pass, then there is a good chance that the incoming code is bug-free (although one cannot guarantee it)
 
 * **Don't merge if build doesn't pass**: Maintainers should only accept pull requests that have passed all quality checks and code reviews before merging. As a rule, no PR should be merged if any of the checks fail.
 
 * **Integrate with external tools**: Integrating the project with external tools for ensuring code quality, coverage etc is essential. These tools will help in doing a first-pass check before it goes to a human reviewer.
 
-* **Release cycles**: Having periodic release cycles that follow semver is paramount.
+* **Release cycles**: Having periodic release cycles that follow semantic versioning (See `this <https://www.jvandemo.com/a-simple-guide-to-semantic-versioning/>`_), also called semver, is paramount. It can help build discipline in the SDLC, which can, in turn allow for adoption of stricter processes (Like Vincent Driessen's `model <https://nvie.com/posts/a-successful-git-branching-model/>`_) These stricter processes might then help in increased efficiency, lesser bugs and vulnerabilities etc.
 
 * **Addressing issues and PRs**: Tagging, assigning and resolving issues and PRs as soon as possible is very important. Several high severity CVEs have first come up as issues.
 

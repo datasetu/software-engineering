@@ -1,92 +1,9 @@
 Understanding the git pull-request workflow
 -------------------------------------------
 
-There are several git workflows out there. I personally like `Vincent Driessen's <https://nvie.com/posts/a-successful-git-branching-model/>`_ workflow. It is over a decade old and followed religiously by several companies. It even comes with an excellent tool called `git flow <https://github.com/nvie/gitflow>`_. It is very well suited for projects which do periodic semantically-versioned releases. However, it can become a bit of a burden and *make your work painful after your projects grow* (See `this <https://reallifeprogramming.com/git-process-that-works-say-no-to-gitflow-50bf2038ccf7>`_ article by Marek Piechut)   
+There are several git workflows out there. I personally like `Vincent Driessen's <https://nvie.com/posts/a-successful-git-branching-model/>`_ workflow. It is over a decade old and followed religiously by several companies. It even comes with an excellent tool called `git flow <https://github.com/nvie/gitflow>`_. It is very well suited for projects which do periodic semantically-versioned releases. However, it can become a bit of a burden and "make your work painful after your projects grow" (See `this <https://reallifeprogramming.com/git-process-that-works-say-no-to-gitflow-50bf2038ccf7>`_ article by Marek Piechut)   
 
-In fact, this guide is based on Marek's article. It provides a clean way to effectively collaborate while touching upon the most commonly occuring problems caused by, *ahem*, hitherto uninitiated team members. 
-
-General git dos and don'ts
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-* Always make it a point to add files to your index (staging area) using::
-
-    git add <filename>
-
-  Pressing ``tab`` after ``git add`` will automatically bring up changed files (in most shells). Manually add one file after another or by specifying filenames seperated by spaces in the ``git add``. You can ensure that all your changed files have been added using::
-
-    git status
-
-  Commit all the required files that show up. Do not add binaries like ``.a``, ``.so``, ``.jar``, ``.war`` and so on. Also do not add files that might contain dynamically generated passwords or any kind of secrets. It is a good practice to add these recurring unnecessary files in ``.gitignore``. For e.g. a ``maven`` project's ``.gitignore`` might look like this::
-
-    ./target/*
-
-  **NEVER** use ``git add .`` or ``git add --all`` for you might unknowingly be adding files like the ones mentioned above to the repository.
-  
-  If this practice sounds a little too pedantic, I urge you to read `this <https://github.com/ChALkeR/notes/blob/master/Do-not-underestimate-credentials-leaks.md>`_.
-
-* When working with a repository with many collaborators, the following is a very common occurrence::
-
-    To git@github.com:someguy/somerepo.git
-    ! [rejected]        master -> master (non-fast-forward)
-    error: failed to push some refs to 'git@github.com:someguy/somerepo.git'
-    hint: Updates were rejected because a pushed branch tip is behind its remote
-    hint: counterpart. Check out this branch and merge the remote changes
-    hint: (e.g. 'git pull') before pushing again.
-    hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-
-
-  Naturally, when you turn to the sacred texts (Stackoverflow) to solve the problem, the second most upvoted answer, which is also the most alluring one, owing to its brevity, is perhaps **the best thing you can do to lose your job**. (I kid you not, just look at the memes about this) The cursed command is none other than::
-
-   git push -f origin master
-
-  **NEVER** run this command. At any cost. This will overwrite all changes in the repository with the changes you have made, if the heads are not in sync. We will talk about how to deal with this problem a little later.
-
-* A commit message is meant to be a summary of what the commit does. It needs to be descriptive, yet brief. The first line, should describe the most significant change that the commit does. First line commit messages longer than ``50`` characters are truncated and wrapped to the next line resulting in a messy view on the commits page of github. So brevity is key. If there are some more minor changes, they can follow on the subsequent lines. This is purely optional. 
-  
-  It is a good practice to have one major change per commit. Mixing up several changes in the same commit might create problems for someone who is trying to run ``git blame`` or  ``git bisect`` A good commit message looks something like this::
-
-    Updated regex to allow underscores in username
-
-    Fixed minor typos in the readme
-
-    Signed-off-by: Mikhail Tal<tal@mikhailtal.com>
-
-  Commits should be made using ``git commit``, and not using::
-  
-    git commit -m "<Commit message>" 
-    
-  since descriptive commit messages cannot be written using the latter option.
-    
-  Commit messages should certainly not look like this
-
-    .. image:: https://imgs.xkcd.com/comics/git_commit.png
-       :align: center
-       :target: https://imgs.xkcd.com/comics/git_commit.png
-
-  Generally, commit messages should not be:
-
-   - Ambiguous or esoteric (``Fixed bug``, ``Added feature`` etc.)
-   - Meaninglessly short (``x``, ``y``, ``a``, ``Add``, ``Update`` etc.)
-   - Too long (See `this <https://chris.beams.io/posts/git-commit/>`_):: 
-
-      Re-adding ConfigurationPostProcessorTests after its brief 
-      removal in r814. @Ignore-ing the 
-      testCglibClassesAreLoadedJustInTimeForEnhancement() 
-      method as it turns out this was one of the culprits in the 
-      recent build breakage. The classloader hacking causes 
-      subtle downstream effects, breaking unrelated tests. The 
-      test method is still useful, but should only be run on a 
-      manual basis to ensure CGLIB is not prematurely 
-      classloaded, and should not be run as part of the 
-      automated build.
-
-  You can read about how to write good git commit messages `here <https://chris.beams.io/posts/git-commit/>`_. I would not strongly advocate the use of imperative moods in commit messages. It's completely up to the developer. 
-
-* Commit often. Even if the change is minor, it is a good practice to commit frequently. Commits should be atomic. As mentioned previously, if there are lots of changes in a single commit, then it makes the life of the guy trying to run ``git bisect``, very hard.  
-
-
-
-With the most basic dos and don'ts out of the way, let us now get to the brass tacks. We will be looking at:
+In fact, this guide, based on Marek's article, provides a clean way to effectively collaborate while touching upon the most commonly occuring problems caused by, *ahem*, hitherto uninitiated team members. We will be looking at:
 
 #. The importance of a workflow
 #. A step-by-step guide to the workflow
@@ -94,8 +11,8 @@ With the most basic dos and don'ts out of the way, let us now get to the brass t
 
 This guide is going to be rife with dense git parlance. If you are not already familiar with the them, read `this <https://linuxacademy.com/blog/linux/git-terms-explained/>`_ guide.
 
-The need for a branching model
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The need for a workflow
+^^^^^^^^^^^^^^^^^^^^^^^
 
 An article from `thenewstack <https://thenewstack.io/dont-mess-with-the-master-working-with-branches-in-git-and-github/>`_ quotes this about pushing directly to master::
 

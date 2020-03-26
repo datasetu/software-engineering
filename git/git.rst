@@ -14,9 +14,11 @@ Furthermore, if certain checks and balances are not in place, a single mistake c
 .. toctree::
    :maxdepth: 1
 
+   dos-donts
    pull-request-model
    workflow-best-practices
    no-workflow
    general-best-practices
    troubleshooting
+   checklist
    

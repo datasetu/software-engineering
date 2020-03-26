@@ -1,7 +1,7 @@
 Some good practices for the workflow
 ====================================
 
-* It is not a good idea to open pull requests from the master branch of your fork. (See `this <https://blog.jasonmeridth.com/posts/do-not-issue-pull-requests-from-your-master-branch/>`_) This is mainly because all unintended commits to ``origin master``, after opening the PR and before getting accepted, become a part of the pull request. 
+* It is not a good idea to open pull requests from the master branch of your fork. (See `this <https://blog.jasonmeridth.com/posts/do-not-issue-pull-requests-from-your-master-branch/>`_) This is mainly because all commits to ``origin master``, after opening the PR and before getting accepted, become a part of the pull request. 
 
 * Feature branches can be named ``feature/*``, bugfixes as ``bugfix/*`` and hotfixes as ``hotfix/*``. This is purely optional, but it makes it easier for other developers to know what was done in the branch.
 

@@ -9,7 +9,7 @@ In fact, this guide, based on Marek's article, provides a clean way to effective
 #. A step-by-step guide to the workflow
 #. Overcoming pitfalls when you're not using the model 
 
-This guide is going to be rife with dense git parlance. If you are not already familiar with the them, read `this <https://linuxacademy.com/blog/linux/git-terms-explained/>`_ guide.
+This guide is going to be rife with dense git parlance. If you are not already familiar with them, read `this <https://linuxacademy.com/blog/linux/git-terms-explained/>`_ first.
 
 The need for a workflow
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -94,6 +94,7 @@ This is by no means a new kind of workflow, this is exactly how contributions ha
 
 #. Now, Bob switches back to the ``coverage-tools`` branch, and rebases his changes with master::
 
+     git checkout coverage-tools
      git rebase master
 
    If there are no conflicts then go to step 16
@@ -127,4 +128,4 @@ This is by no means a new kind of workflow, this is exactly how contributions ha
      git merge upstream/master
      git push origin master
 
-   It is essential to note that if Bob doesn't update his fork and checks out from the master (whose ``HEAD`` is not in sync with Alice's repo), to add a new feature, it will lead to a textbook case of the fork being ``X commits ahead and Y commits behind alice/awesome-tools``  
+   It is essential to note that if Bob doesn't update his fork and checks out from the master (whose ``HEAD`` is not in sync with Alice's repo), to add a new feature, it will lead to a textbook case of the fork being some commits ahead and some commits behind master. For e.g. ``5 commits ahead and 3 commits behind alice/awesome-tools``  

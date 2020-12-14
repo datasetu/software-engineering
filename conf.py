@@ -19,9 +19,9 @@
 
 # -- Project information -----------------------------------------------------
 
-project = u'IUDX SE'
-copyright = u'2020, Poorna Chandra Tejasvi, Arun Babu and Vasanth Rajaraman'
-author = u'Poorna Chandra Tejasvi, Arun Babu and Vasanth Rajaraman'
+project = u'Datasetu Software Engineering'
+copyright = u'2020, Poorna Chandra Tejasvi and Arun Babu'
+author = u'Poorna Chandra Tejasvi and Arun Babu'
 
 # The short X.Y version
 version = u''
@@ -102,7 +102,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'IUDXSEdoc'
+htmlhelp_basename = 'Datasetudoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -129,8 +129,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'IUDXSE.tex', u'IUDX SE Documentation',
-     u'Poorna Chandra Tejasvi, Arun Babu and Vasanth Rajaraman', 'manual'),
+    (master_doc, 'Datasetu.tex', u'Datasetu Software Engineering Documentation',
+     u'Poorna Chandra Tejasvi and Arun Babu', 'manual'),
 ]
 
 
@@ -139,7 +139,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'iudxse', u'IUDX SE Documentation',
+    (master_doc, 'datasetu-se', u'Datasetu Software Engineering Documentation',
      [author], 1)
 ]
 
@@ -150,8 +150,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'IUDXSE', u'IUDX SE Documentation',
-     author, 'IUDXSE', 'One line description of project.',
+    (master_doc, 'Datasetu', u'Datasetu Software Engineering Documentation',
+     author, 'Datasetu', 'Software Engineering best practices for the ARTPARK team',
      'Miscellaneous'),
 ]
 
